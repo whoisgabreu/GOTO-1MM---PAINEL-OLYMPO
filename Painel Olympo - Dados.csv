@@ -1,0 +1,10 @@
+Cliente,Mês,Investimento,Faturamento,ROI,Meta Mensal,% da Meta,Status
+Cliente A,Out,"5.000","50.000",9,"55.000",100.91,Atingiu
+Cliente B,Out,"6.000","45.000",6.50,"50.000",90,Parcial
+Cliente C,Out,"5.500","55.000",9,"80.000",68.75,Não atingiu
+Cliente A,Nov,"5.000","50.000",9,"55.000",100.91,Atingiu
+Cliente B,Nov,"6.000","45.000",6.50,"50.000",90,Parcial
+Cliente C,Nov,"5.500","55.000",9,"80.000",68.75,Não atingiu
+Cliente A,Dez,"5.000","50.000",9,"55.000",100.91,Atingiu
+Cliente B,Dez,"6.000","45.000",6.50,"50.000",90,Parcial
+Cliente C,Dez,"5.500","55.000",9,"80.000",68.75,Não atingiu
