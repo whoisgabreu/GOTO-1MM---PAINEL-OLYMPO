@@ -150,10 +150,10 @@ fig1 = px.bar(
     color_discrete_sequence=px.colors.sequential.Agsunset
 )
 
-fig1.update_traces(
-    text=df_filtrado["Valor Variável"].apply(lambda x: f"R$ {x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")),
-    textposition='outside'
-)
+# fig1.update_traces(
+#     text=df_filtrado["Valor Variável"].apply(lambda x: f"R$ {x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")),
+#     textposition='outside'
+# )
 
 fig1.update_yaxes(tickprefix="R$ ", tickformat=",")
 fig1.update_layout(
