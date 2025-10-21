@@ -273,7 +273,7 @@ df_filtrado = df[(df["Cliente"].isin(clientes)) & (df["Mês"].isin(meses))]
 # KPIs
 # ==============================
 col1, col2, col3 = st.columns(3)
-col1.metric("💰 Faturamento Total", f"R$ {df_filtrado['Faturamento'].sum():,.2f}")
+col1.metric("💰 Faturamento Total", f"R$ {df_filtrado['Faturamento'].sum():,.3f}")
 col2.metric("📈 ROI Médio", f"{df_filtrado['ROI'].mean():.2f}x")
 col3.metric("🎯 % Médio da Meta", f"{df_filtrado['% da Meta'].mean():.1f}%")
 
