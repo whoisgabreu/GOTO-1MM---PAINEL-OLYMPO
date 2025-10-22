@@ -201,7 +201,7 @@ for cliente, grupo in df_filtrado.groupby("Cliente"):
         )
     ))
 
-# 2️⃣ Linhas adicionais — Ticket Médio (opcional)
+# 2️⃣ Linhas adicionais — Ticket Médio (opcional) "#e5c100"
 if mostrar_ticket:
     for cliente, grupo in df_filtrado.groupby("Cliente"):
         fig1.add_trace(go.Scatter(
@@ -209,8 +209,8 @@ if mostrar_ticket:
             y=grupo["Ticket Médio"],
             mode="lines+markers",
             name=f"{cliente} - Ticket Médio",
-            line=dict(width=2, dash="dot", color="#e5c100"),
-            marker=dict(size=6, symbol="diamond", color="#e5c100"),
+            line=dict(width=2, dash="dot", color="#007013"),
+            marker=dict(size=6, symbol="diamond", color="#007013"),
             yaxis="y2",
             hovertemplate=(
                 "<b>%{x}</b><br>"
