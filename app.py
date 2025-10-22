@@ -10,6 +10,11 @@ import plotly.graph_objects as go
 # CONFIGURAÇÃO GERAL
 # ==============================
 st.set_page_config(page_title="Painel Olympo", layout="wide")
+# st.markdown("""
+#     <style>
+#         [data-testid="stToolbar"] {visibility: hidden !important;}
+#     </style>
+# """, unsafe_allow_html=True)
 
 # ==============================
 # ESTILO VISUAL - OLYMPO
