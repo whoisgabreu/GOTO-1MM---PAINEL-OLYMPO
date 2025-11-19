@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import pandas as pd
 import requests
 import plotly.express as px
@@ -15,22 +14,8 @@ st.set_page_config(page_title="Painel Olympo", layout="wide")
 # ==============================
 # ESTILO VISUAL - OLYMPO
 # ==============================
-
 st.markdown("""
-
-
-
     <style>
-            
-        [data-testid="stBaseButton-secondary"] {
-            position: inherit;
-            width: 13.5vw
-        }
-
-        [data-testid="stSidebarNavItems"] {
-            display: None
-            }
-
         [data-testid="stAppViewContainer"] {
             background-color: #0b0c10;
             color: #f5f5f5;
@@ -76,14 +61,11 @@ st.sidebar.markdown("""
     <hr>
 """, unsafe_allow_html=True)
 
-# 🔀 BOTÃO PARA IR PARA O NOVO DASHBOARD
-if st.sidebar.button("📊 Painel de Potencial"):
-    st.switch_page("pages/potencial.py")  # ajuste o nome caso necessário
-
 # ==============================
 # LEITURA DO JSON
 # ==============================
 data = requests.get(url="https://n8n.v4lisboatech.com.br/webhook/painel-olympo/variaveis").json()
+
 df_var = pd.DataFrame(data["variavel"])
 df_fixo = pd.DataFrame(data["fixo"])
 
@@ -178,9 +160,9 @@ col1.metric("💰 Valor Variável Total", f"R$ {df_filtrado['Valor Variável'].s
 col2.metric("💵 Valor Fixo Total", f"R$ {df_filtrado['Valor Fixo'].sum():,.2f}")
 col3.metric("📊 Total de Registros", len(df_filtrado))
 col4.metric("🎟️ Total de Eventos", int(df_filtrado["Qtd Eventos"].sum()))
+# col5.metric("💸 Ticket Médio Geral", f"R$ {df_filtrado['Ticket Médio'].mean():,.2f}")
 
 st.markdown("---")
-
 
 # ==============================
 # GRÁFICO 1 — Valor Variável
@@ -282,3 +264,9 @@ if st.button("🔮 Consultar IA"):
         st.markdown("#### 🧾 Resposta do Agente Olympo:")
         st.markdown(texto_resposta, unsafe_allow_html=True)
 
+# ==============================
+# TABELA DETALHADA
+# ==============================
+st.markdown("---")
+st.subheader("📋 Dados Detalhados")
+st.dataframe(df_filtrado, use_container_width=True)

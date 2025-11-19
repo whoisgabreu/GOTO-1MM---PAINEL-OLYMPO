@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import pandas as pd
 import requests
 import plotly.express as px
@@ -11,26 +10,17 @@ import plotly.graph_objects as go
 # CONFIGURAÇÃO GERAL
 # ==============================
 st.set_page_config(page_title="Painel Olympo", layout="wide")
+# st.markdown("""
+#     <style>
+#         [data-testid="stToolbar"] {visibility: hidden !important;}
+#     </style>
+# """, unsafe_allow_html=True)
 
 # ==============================
 # ESTILO VISUAL - OLYMPO
 # ==============================
-
 st.markdown("""
-
-
-
     <style>
-            
-        [data-testid="stBaseButton-secondary"] {
-            position: inherit;
-            width: 13.5vw
-        }
-
-        [data-testid="stSidebarNavItems"] {
-            display: None
-            }
-
         [data-testid="stAppViewContainer"] {
             background-color: #0b0c10;
             color: #f5f5f5;
@@ -76,14 +66,11 @@ st.sidebar.markdown("""
     <hr>
 """, unsafe_allow_html=True)
 
-# 🔀 BOTÃO PARA IR PARA O NOVO DASHBOARD
-if st.sidebar.button("📊 Painel de Potencial"):
-    st.switch_page("pages/potencial.py")  # ajuste o nome caso necessário
-
 # ==============================
 # LEITURA DO JSON
 # ==============================
 data = requests.get(url="https://n8n.v4lisboatech.com.br/webhook/painel-olympo/variaveis").json()
+
 df_var = pd.DataFrame(data["variavel"])
 df_fixo = pd.DataFrame(data["fixo"])
 
@@ -117,7 +104,7 @@ df_agrupado = (
     .agg({
         "Valor Variável": "sum",
         "Valor Fixo": "first",
-        "Registro": "count"
+        "Registro": "count"  # número de eventos
     })
 )
 
@@ -154,12 +141,16 @@ meses = st.sidebar.multiselect(
     default=meses_disponiveis
 )
 
+# Botão de aplicar filtros
+# aplicar = st.sidebar.button("🔍 Aplicar Filtros", use_container_width=True)
+
 if "filtros_aplicados" not in st.session_state:
     st.session_state.filtros_aplicados = {
         "clientes": df_agrupado["Cliente"].unique().tolist(),
         "meses": meses_disponiveis
     }
 
+# if aplicar:
 st.session_state.filtros_aplicados = {"clientes": clientes, "meses": meses}
 
 clientes_aplicados = st.session_state.filtros_aplicados["clientes"]
@@ -173,34 +164,44 @@ df_filtrado = df_agrupado[
 # ==============================
 # KPIs
 # ==============================
-col1, col2, col3, col4 = st.columns(4)
+col1, col2, col3, col4, col5 = st.columns(5)
 col1.metric("💰 Valor Variável Total", f"R$ {df_filtrado['Valor Variável'].sum():,.2f}")
 col2.metric("💵 Valor Fixo Total", f"R$ {df_filtrado['Valor Fixo'].sum():,.2f}")
 col3.metric("📊 Total de Registros", len(df_filtrado))
 col4.metric("🎟️ Total de Eventos", int(df_filtrado["Qtd Eventos"].sum()))
+col5.metric("💸 Ticket Médio Geral", f"R$ {df_filtrado['Ticket Médio'].mean():,.2f}")
 
 st.markdown("---")
 
 
 # ==============================
-# GRÁFICO 1 — Valor Variável
+# GRÁFICO 1 — Valor Variável por Mês e Cliente (com opção de Ticket Médio)
 # ==============================
+
 st.subheader("📈 Evolução de Valor Variável")
 mostrar_ticket = st.checkbox("💸 Exibir linha de Ticket Médio", value=False)
 
 fig1 = go.Figure()
 
+# 1️⃣ Linhas principais — Valor Variável
 for cliente, grupo in df_filtrado.groupby("Cliente"):
     fig1.add_trace(go.Scatter(
         x=grupo["Mês"],
         y=grupo["Valor Variável"],
-        mode="lines+markers",
+        mode="lines+markers+text",
         name=f"{cliente} - Valor Variável",
+        text=[f"R$ {v:,.0f}".replace(",", "X").replace(".", ",").replace("X", ".") for v in grupo["Valor Variável"]],
+        textposition="top center",
         line=dict(width=3),
         marker=dict(size=7),
-        hovertemplate="<b>%{x}</b><br>Cliente: "+cliente+"<br>Valor Variável: R$ %{y:,.2f}<extra></extra>"
+        hovertemplate=(
+            "<b>%{x}</b><br>"
+            f"Cliente: {cliente}<br>"
+            "Valor Variável: R$ %{y:,.2f}<extra></extra>"
+        )
     ))
 
+# 2️⃣ Linhas adicionais — Ticket Médio (opcional) "#e5c100"
 if mostrar_ticket:
     for cliente, grupo in df_filtrado.groupby("Cliente"):
         fig1.add_trace(go.Scatter(
@@ -211,9 +212,14 @@ if mostrar_ticket:
             line=dict(width=2, dash="dot", color="#007013"),
             marker=dict(size=6, symbol="diamond", color="#007013"),
             yaxis="y2",
-            hovertemplate="<b>%{x}</b><br>Cliente: "+cliente+"<br>Ticket Médio: R$ %{y:,.2f}<extra></extra>"
+            hovertemplate=(
+                "<b>%{x}</b><br>"
+                f"Cliente: {cliente}<br>"
+                "Ticket Médio: R$ %{y:,.2f}<extra></extra>"
+            )
         ))
 
+# 3️⃣ Layout (adapta automaticamente se o eixo 2 for usado)
 layout_args = dict(
     title="Valor Variável por Mês e Cliente",
     template="plotly_dark",
@@ -235,7 +241,7 @@ fig1.update_layout(**layout_args)
 st.plotly_chart(fig1, use_container_width=True)
 
 # ==============================
-# GRÁFICO 2 — Comparativo
+# GRÁFICO 2 — Comparativo: Valor Variável x Valor Fixo
 # ==============================
 df_comparativo = df_filtrado.groupby("Cliente", as_index=False)[["Valor Variável", "Valor Fixo"]].sum()
 
@@ -248,6 +254,11 @@ fig2 = px.bar(
     color_discrete_sequence=["#e5c100", "#00aaff"]
 )
 
+for trace in fig2.data:
+    trace.text = [f"R$ {y:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".") for y in trace.y]
+    trace.textposition = "outside"
+
+fig2.update_yaxes(tickprefix="R$ ", tickformat=",")
 fig2.update_layout(
     uniformtext_minsize=8,
     uniformtext_mode='hide',
@@ -259,26 +270,7 @@ fig2.update_layout(
 st.plotly_chart(fig2, use_container_width=True)
 
 # ==============================
-# AGENTE OLYMPO — LEITURA DE WEBHOOK
+# TABELA DETALHADA
 # ==============================
-st.markdown("---")
-st.subheader("🧠 Agente Olympo (IA)")
-
-if st.button("🔮 Consultar IA"):
-    if not meses_aplicados:
-        st.warning("Selecione pelo menos um mês e um cliente antes de consultar o agente.")
-    else:
-        periodo = ",".join(meses_aplicados)
-        clientes = ",".join(clientes_aplicados)
-        url = f"https://n8n.v4lisboatech.com.br/webhook/painel-olympo/agente?periodo={periodo}&cliente={clientes}"
-
-        try:
-            response = requests.get(url, timeout=30)
-            response.raise_for_status()
-            texto_resposta = response.text
-        except Exception as e:
-            texto_resposta = f"❌ Erro ao consultar o agente:\n\n{e}"
-
-        st.markdown("#### 🧾 Resposta do Agente Olympo:")
-        st.markdown(texto_resposta, unsafe_allow_html=True)
-
+st.subheader("📋 Dados Detalhados")
+st.dataframe(df_filtrado, use_container_width=True)

@@ -1,0 +1,3 @@
+TICKET MÉDIO DOS EVENTOS
+
+Alterar gráfico de Valor Variavel: Barras > Linha

@@ -1,0 +1,177 @@
+{
+"variavel":[
+  {
+    "row_number": 2,
+    "Cliente": "Burning Fest",
+    "Registro": 1,
+    "Mês": "Maio",
+    "Valor Variável": 23415.35
+  },
+  {
+    "row_number": 3,
+    "Cliente": "Burning Fest",
+    "Registro": 1,
+    "Mês": "Junho",
+    "Valor Variável": 7935
+  },
+  {
+    "row_number": 4,
+    "Cliente": "Burning Fest",
+    "Registro": 2,
+    "Mês": "Junho",
+    "Valor Variável": 15306.22
+  },
+  {
+    "row_number": 5,
+    "Cliente": "Burning Fest",
+    "Registro": 1,
+    "Mês": "Julho",
+    "Valor Variável": 4902.66
+  },
+  {
+    "row_number": 6,
+    "Cliente": "Burning Fest",
+    "Registro": 2,
+    "Mês": "Julho",
+    "Valor Variável": 7286.34
+  },
+  {
+    "row_number": 7,
+    "Cliente": "Burning Fest",
+    "Registro": 3,
+    "Mês": "Julho",
+    "Valor Variável": 8815.77
+  },
+  {
+    "row_number": 8,
+    "Cliente": "Burning Fest",
+    "Registro": 4,
+    "Mês": "Julho",
+    "Valor Variável": 5934.98
+  },
+  {
+    "row_number": 9,
+    "Cliente": "Burning Fest",
+    "Registro": 1,
+    "Mês": "Agosto",
+    "Valor Variável": 6337
+  },
+  {
+    "row_number": 10,
+    "Cliente": "Burning Fest",
+    "Registro": 2,
+    "Mês": "Agosto",
+    "Valor Variável": 4421.67
+  },
+  {
+    "row_number": 11,
+    "Cliente": "Burning Fest",
+    "Registro": 3,
+    "Mês": "Agosto",
+    "Valor Variável": 8470.34
+  },
+  {
+    "row_number": 12,
+    "Cliente": "Burning Fest",
+    "Registro": 4,
+    "Mês": "Agosto",
+    "Valor Variável": 3843.45
+  },
+  {
+    "row_number": 13,
+    "Cliente": "Burning Fest",
+    "Registro": 1,
+    "Mês": "Setembro",
+    "Valor Variável": 2954.56
+  },
+  {
+    "row_number": 14,
+    "Cliente": "Burning Fest",
+    "Registro": 2,
+    "Mês": "Setembro",
+    "Valor Variável": 3633.97
+  },
+  {
+    "row_number": 15,
+    "Cliente": "Burning Fest",
+    "Registro": 3,
+    "Mês": "Setembro",
+    "Valor Variável": 1856.18
+  },
+  {
+    "row_number": 16,
+    "Cliente": "Burning Fest",
+    "Registro": 4,
+    "Mês": "Setembro",
+    "Valor Variável": 5404.11
+  },
+  {
+    "row_number": 17,
+    "Cliente": "Festival Volta ao Mundo",
+    "Registro": 1,
+    "Mês": "Setembro",
+    "Valor Variável": 2855.15
+  },
+  {
+    "row_number": 18,
+    "Cliente": "Burning Fest",
+    "Registro": 1,
+    "Mês": "Outubro",
+    "Valor Variável": 2234.77
+  },
+  {
+    "row_number": 19,
+    "Cliente": "Burning Fest",
+    "Registro": 2,
+    "Mês": "Outubro",
+    "Valor Variável": 3449.05
+  },
+  {
+    "row_number": 20,
+    "Cliente": "Burning Fest",
+    "Registro": 3,
+    "Mês": "Outubro",
+    "Valor Variável": 8602.06
+  },
+  {
+    "row_number": 21,
+    "Cliente": "Festival Volta ao Mundo",
+    "Registro": 1,
+    "Mês": "Outubro",
+    "Valor Variável": 3319.13
+  },
+{
+    "row_number": 22,
+    "Cliente": "Lini Eventos",
+    "Registro": 1,
+    "Mês": "Outubro",
+    "Valor Variável": 0
+  }
+],
+"fixo":[
+    {
+    "row_number": 
+    2,
+    "Cliente": 
+    "Burning Fest",
+    "Valor Fixo": 
+    7935
+    },
+    {
+    "row_number": 
+    3,
+    "Cliente": 
+    "Festival Volta ao Mundo",
+    "Valor Fixo": 
+    8973
+    },
+    {
+    "row_number": 
+    4,
+    "Cliente": 
+    "Lini Eventos",
+    "Valor Fixo": 
+    9500
+    }
+]
+}
